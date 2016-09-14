@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.JhacOutMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.JhacOut" >
+    <id column="out_id" property="outId" jdbcType="VARCHAR" />
+    <result column="out_serialno" property="outSerialno" jdbcType="VARCHAR" />
+    <result column="out_frameno" property="outFrameno" jdbcType="VARCHAR" />
+    <result column="out_pc_id" property="outPcId" jdbcType="VARCHAR" />
+    <result column="out_is_check_car" property="outIsCheckCar" jdbcType="INTEGER" />
+    <result column="out_is_test_car" property="outIsTestCar" jdbcType="INTEGER" />
+    <result column="out_is_sign" property="outIsSign" jdbcType="INTEGER" />
+    <result column="out_frameno_pic" property="outFramenoPic" jdbcType="VARCHAR" />
+    <result column="out_serialno_pic" property="outSerialnoPic" jdbcType="VARCHAR" />
+    <result column="out_sign_pic" property="outSignPic" jdbcType="VARCHAR" />
+    <result column="out_person" property="outPerson" jdbcType="VARCHAR" />
+    <result column="out_address" property="outAddress" jdbcType="VARCHAR" />
+    <result column="out_beizhu" property="outBeizhu" jdbcType="VARCHAR" />
+    <result column="out_auth_telephone" property="outAuthTelephone" jdbcType="VARCHAR" />
+    <result column="out_area_code" property="outAreaCode" jdbcType="VARCHAR" />
+    <result column="out_add_date" property="outAddDate" jdbcType="VARCHAR" />
+    <result column="out_data_status" property="outDataStatus" jdbcType="INTEGER" />
+    
+    <association property="user" javaType="com.sofun.api.pojo.JhacUser">
+    	<result column="user_truename" property="userTruename" jdbcType="VARCHAR" />
+    </association>
+    <association property="company" javaType="com.sofun.api.pojo.JhacCompany">
+    	<result column="com_name" property="comName" jdbcType="VARCHAR" />
+    </association>
+    
+  </resultMap>
+  
+  <resultMap id="mapB" type="com.sofun.api.pojo.JhacCompany" >
+    <id column="com_id" property="comId" jdbcType="VARCHAR" />
+    <result column="com_name" property="comName" jdbcType="VARCHAR" />
+    <result column="com_parent_id" property="comParentId" jdbcType="VARCHAR" />
+    <result column="com_area_code" property="comAreaCode" jdbcType="VARCHAR" />
+    <result column="com_add_date" property="comAddDate" jdbcType="VARCHAR" />
+    <result column="com_data_status" property="comDataStatus" jdbcType="INTEGER" />
+    
+    <collection property="outs" ofType="com.sofun.api.pojo.JhacOut" column="out_address">
+    	<id column="out_id" property="outId" jdbcType="VARCHAR" />
+	    <result column="out_serialno" property="outSerialno" jdbcType="VARCHAR" />
+	    <result column="out_frameno" property="outFrameno" jdbcType="VARCHAR" />
+	    <result column="out_pc_id" property="outPcId" jdbcType="VARCHAR" />
+	    <result column="out_is_check_car" property="outIsCheckCar" jdbcType="INTEGER" />
+	    <result column="out_is_test_car" property="outIsTestCar" jdbcType="INTEGER" />
+	    <result column="out_is_sign" property="outIsSign" jdbcType="INTEGER" />
+	    <result column="out_frameno_pic" property="outFramenoPic" jdbcType="VARCHAR" />
+	    <result column="out_serialno_pic" property="outSerialnoPic" jdbcType="VARCHAR" />
+	    <result column="out_sign_pic" property="outSignPic" jdbcType="VARCHAR" />
+	    <result column="out_person" property="outPerson" jdbcType="VARCHAR" />
+	    <result column="out_address" property="outAddress" jdbcType="VARCHAR" />
+	    <result column="out_beizhu" property="outBeizhu" jdbcType="VARCHAR" />
+	    <result column="out_auth_telephone" property="outAuthTelephone" jdbcType="VARCHAR" />
+	    <result column="out_area_code" property="outAreaCode" jdbcType="VARCHAR" />
+	    <result column="out_add_date" property="outAddDate" jdbcType="VARCHAR" />
+	    <result column="out_data_status" property="outDataStatus" jdbcType="INTEGER" />
+    </collection>
+  </resultMap>
+  
+  <select id="monthOut" parameterType="java.util.Map" resultMap="mapB">
+  		SELECT
+			*
+		FROM
+			jhac_company c,
+			jhac_out o
+		WHERE
+			c.com_id = o.out_address
+			<if test="year != null and year != ''">
+				AND YEAR (o.out_add_date) = #{year}
+			</if>
+			<if test="month != null and month != ''">
+				AND MONTH (o.out_add_date) = #{month}
+			</if>
+			<if test="areaCode != null and areaCode != ''">
+				and o.out_area_code = #{areaCode}
+			</if>
+  </select>
+  
+  <sql id="Base_Column_List" >
+    out_id, out_serialno, out_frameno, out_pc_id, out_is_check_car, out_is_test_car, 
+    out_is_sign, out_frameno_pic, out_serialno_pic, out_sign_pic, out_person, out_address, 
+    out_beizhu, out_auth_telephone, out_area_code, out_add_date, out_data_status
+  </sql>
+  
+ 
+	<!--  select 
+	    <include refid="Base_Column_List" />
+    from jhac_out -->
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT
+		o.*, u.user_truename,
+		c.com_name
+	FROM
+		jhac_out o,
+		jhac_user u,
+		jhac_company c
+	WHERE
+		o.out_person = u.user_id
+	AND o.out_address = c.com_id
+    and out_id = #{outId,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- SELECT
+		o.*, u.user_truename,
+		c.com_name
+	FROM
+		jhac_out o,
+		jhac_user u,
+		jhac_company c
+	WHERE
+		o.out_person = u.user_id
+	AND o.out_address = c.com_id -->
+	
+	<!-- SELECT
+		o.*, u.user_truename
+	FROM
+		jhac_out o
+	LEFT JOIN jhac_user u ON o.out_person = u.user_id
+	LEFT JOIN jhac_company c ON o.out_address = c.com_id -->
+	
+  <sql id="baseQuery">
+	SELECT
+		o.*, u.user_truename,
+		c.com_name
+	FROM
+		jhac_out o,
+		jhac_user u,
+		jhac_company c
+	WHERE
+		o.out_person = u.user_id
+	AND o.out_address = c.com_id
+  	<if test="outSerialno !=null and outSerialno !=''">
+  		and out_serialno like '%${outSerialno}%'
+  	</if>
+  	<if test="outFrameno !=null and outFrameno !=''">
+  		and out_frameno like '%${outFrameno}%'
+  	</if>
+  	<if test="areaCode != null and areaCode != ''">
+  		and out_area_code = #{areaCode}
+  	</if>
+  	<if test="startDate != null  and startDate != '' ">
+  		and out_add_date &gt;= #{startDate}
+  	</if>
+  	<if test="endDate != null and endDate != ''">
+  		and out_add_date &lt;= #{endDate}
+  	</if>
+  	<if test="outAddress != null and outAddress != ''">
+  		and out_address = #{outAddress}
+  	</if>
+  </sql>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	<include refid="baseQuery" />
+  	order by out_add_date
+  	<if test="pageSize != null">
+  		limit #{startIndex},#{pageSize}
+  	</if>
+  </select>
+  
+  <select id="total" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	select
+  	count(*)
+  	from (
+  	<include refid="baseQuery" />
+  	) aa
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from jhac_out
+    where out_id = #{outId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.sofun.api.pojo.JhacOut" >
+    insert into jhac_out
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="outId != null" >
+        out_id,
+      </if>
+      <if test="outSerialno != null" >
+        out_serialno,
+      </if>
+      <if test="outFrameno != null" >
+        out_frameno,
+      </if>
+      <if test="outPcId != null" >
+        out_pc_id,
+      </if>
+      <if test="outIsCheckCar != null" >
+        out_is_check_car,
+      </if>
+      <if test="outIsTestCar != null" >
+        out_is_test_car,
+      </if>
+      <if test="outIsSign != null" >
+        out_is_sign,
+      </if>
+      <if test="outFramenoPic != null" >
+        out_frameno_pic,
+      </if>
+      <if test="outSerialnoPic != null" >
+        out_serialno_pic,
+      </if>
+      <if test="outSignPic != null" >
+        out_sign_pic,
+      </if>
+      <if test="outPerson != null" >
+        out_person,
+      </if>
+      <if test="outAddress != null" >
+        out_address,
+      </if>
+      <if test="outBeizhu != null" >
+        out_beizhu,
+      </if>
+      <if test="outAuthTelephone != null" >
+        out_auth_telephone,
+      </if>
+      <if test="outAreaCode != null" >
+        out_area_code,
+      </if>
+      <if test="outAddDate != null" >
+        out_add_date,
+      </if>
+      <if test="outDataStatus != null" >
+        out_data_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="outId != null" >
+        #{outId,jdbcType=VARCHAR},
+      </if>
+      <if test="outSerialno != null" >
+        #{outSerialno,jdbcType=VARCHAR},
+      </if>
+      <if test="outFrameno != null" >
+        #{outFrameno,jdbcType=VARCHAR},
+      </if>
+      <if test="outPcId != null" >
+        #{outPcId,jdbcType=VARCHAR},
+      </if>
+      <if test="outIsCheckCar != null" >
+        #{outIsCheckCar,jdbcType=INTEGER},
+      </if>
+      <if test="outIsTestCar != null" >
+        #{outIsTestCar,jdbcType=INTEGER},
+      </if>
+      <if test="outIsSign != null" >
+        #{outIsSign,jdbcType=INTEGER},
+      </if>
+      <if test="outFramenoPic != null" >
+        #{outFramenoPic,jdbcType=VARCHAR},
+      </if>
+      <if test="outSerialnoPic != null" >
+        #{outSerialnoPic,jdbcType=VARCHAR},
+      </if>
+      <if test="outSignPic != null" >
+        #{outSignPic,jdbcType=VARCHAR},
+      </if>
+      <if test="outPerson != null" >
+        #{outPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="outAddress != null" >
+        #{outAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="outBeizhu != null" >
+        #{outBeizhu,jdbcType=VARCHAR},
+      </if>
+      <if test="outAuthTelephone != null" >
+        #{outAuthTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="outAreaCode != null" >
+        #{outAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="outAddDate != null" >
+        #{outAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outDataStatus != null" >
+        #{outDataStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+ 
+  <update id="update" parameterType="com.sofun.api.pojo.JhacOut" >
+    update jhac_out
+    <set >
+      <if test="outSerialno != null" >
+        out_serialno = #{outSerialno,jdbcType=VARCHAR},
+      </if>
+      <if test="outFrameno != null" >
+        out_frameno = #{outFrameno,jdbcType=VARCHAR},
+      </if>
+      <if test="outPcId != null" >
+        out_pc_id = #{outPcId,jdbcType=VARCHAR},
+      </if>
+      <if test="outIsCheckCar != null" >
+        out_is_check_car = #{outIsCheckCar,jdbcType=INTEGER},
+      </if>
+      <if test="outIsTestCar != null" >
+        out_is_test_car = #{outIsTestCar,jdbcType=INTEGER},
+      </if>
+      <if test="outIsSign != null" >
+        out_is_sign = #{outIsSign,jdbcType=INTEGER},
+      </if>
+      <if test="outFramenoPic != null" >
+        out_frameno_pic = #{outFramenoPic,jdbcType=VARCHAR},
+      </if>
+      <if test="outSerialnoPic != null" >
+        out_serialno_pic = #{outSerialnoPic,jdbcType=VARCHAR},
+      </if>
+      <if test="outSignPic != null" >
+        out_sign_pic = #{outSignPic,jdbcType=VARCHAR},
+      </if>
+      <if test="outPerson != null" >
+        out_person = #{outPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="outAddress != null" >
+        out_address = #{outAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="outBeizhu != null" >
+        out_beizhu = #{outBeizhu,jdbcType=VARCHAR},
+      </if>
+      <if test="outAuthTelephone != null" >
+        out_auth_telephone = #{outAuthTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="outAreaCode != null" >
+        out_area_code = #{outAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="outAddDate != null" >
+        out_add_date = #{outAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outDataStatus != null" >
+        out_data_status = #{outDataStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where out_id = #{outId,jdbcType=VARCHAR}
+  </update>
+ 
+</mapper>

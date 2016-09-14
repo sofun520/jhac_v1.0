@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.JhacBackserviceMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.JhacBackservice" >
+    <id column="bac_id" property="bacId" jdbcType="VARCHAR" />
+    <result column="bac_out_id" property="bacOutId" jdbcType="VARCHAR" />
+    <result column="bac_problem" property="bacProblem" jdbcType="VARCHAR" />
+    <result column="bac_problem_pic" property="bacProblemPic" jdbcType="VARCHAR" />
+    <result column="bac_add_date" property="bacAddDate" jdbcType="VARCHAR" />
+    <result column="bac_user_id" property="bacUserId" jdbcType="VARCHAR" />
+    <result column="bac_area_code" property="bacAreaCode" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    bac_id, bac_out_id, bac_problem, bac_problem_pic, bac_add_date, bac_user_id, bac_area_code
+  </sql>
+  
+  
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhac_backservice
+    where bac_id = #{bacId,jdbcType=VARCHAR}
+  </select>
+  
+  <sql id="baseQuery">
+  	select
+  	<include refid="Base_Column_List" />
+  	from jhac_backservice
+  	where 1=1
+  	<if test="areaCode != null">
+	  	and bac_area_code=#{areaCode}
+  	</if>
+  </sql>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	<include refid="baseQuery" />
+  	order by bac_add_date
+  	<if test="pageSize != null">
+  		limit #{startIndex},#{pageSize}
+  	</if>
+  </select>
+  
+   <select id="total" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	select
+  	count(*)
+  	from
+  	(
+  	<include refid="baseQuery"></include>
+  	) aa
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from jhac_backservice
+    where bac_id = #{bacId,jdbcType=VARCHAR}
+  </delete>
+  
+
+  <insert id="insert" parameterType="com.sofun.api.pojo.JhacBackservice" >
+    insert into jhac_backservice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bacId != null" >
+        bac_id,
+      </if>
+      <if test="bacOutId != null" >
+        bac_out_id,
+      </if>
+      <if test="bacProblem != null" >
+        bac_problem,
+      </if>
+      <if test="bacProblemPic != null" >
+        bac_problem_pic,
+      </if>
+      <if test="bacAddDate != null" >
+        bac_add_date,
+      </if>
+      <if test="bacUserId != null" >
+        bac_user_id,
+      </if>
+      <if test="bacAreaCode != null" >
+        bac_area_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bacId != null" >
+        #{bacId,jdbcType=VARCHAR},
+      </if>
+      <if test="bacOutId != null" >
+        #{bacOutId,jdbcType=VARCHAR},
+      </if>
+      <if test="bacProblem != null" >
+        #{bacProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="bacProblemPic != null" >
+        #{bacProblemPic,jdbcType=VARCHAR},
+      </if>
+      <if test="bacAddDate != null" >
+        #{bacAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bacUserId != null" >
+        #{bacUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="bacAreaCode != null" >
+        #{bacAreaCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.sofun.api.pojo.JhacBackservice" >
+    update jhac_backservice
+    <set >
+      <if test="bacOutId != null" >
+        bac_out_id = #{bacOutId,jdbcType=VARCHAR},
+      </if>
+      <if test="bacProblem != null" >
+        bac_problem = #{bacProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="bacProblemPic != null" >
+        bac_problem_pic = #{bacProblemPic,jdbcType=VARCHAR},
+      </if>
+      <if test="bacAddDate != null" >
+        bac_add_date = #{bacAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bacUserId != null" >
+        bac_user_id = #{bacUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="bacAreaCode != null" >
+        bac_area_code = #{bacAreaCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bac_id = #{bacId,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

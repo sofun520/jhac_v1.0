@@ -1,0 +1,6 @@
+[
+{"text":"<a href=\"javascript:void()\" onclick=\"check(1)\">合作商信息管理</a>"},
+{"text":"<a href='javascript:void()' onclick='check(2)'>车辆类别信息</a>"},
+{"text":"<a href='javascript:void()' onclick='check(3)'>产品类别管理</a>"},
+{"text":"<a href='javascript:void()' onclick='check(4)'>区域信息管理</a>"}
+]

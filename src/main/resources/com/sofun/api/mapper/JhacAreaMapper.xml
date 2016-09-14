@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.JhacAreaMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.JhacArea" >
+    <id column="area_id" property="areaId" jdbcType="VARCHAR" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="area_en" property="areaEn" jdbcType="VARCHAR" />
+    <result column="area_add_date" property="areaAddDate" jdbcType="VARCHAR" />
+    <result column="area_data_status" property="areaDataStatus" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    area_id, area_name, area_en, area_add_date, area_data_status
+  </sql>
+  
+  
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhac_area
+    where area_id = #{areaId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	select
+  	<include refid="Base_Column_List" />
+  	from jhac_area
+  	order by area_add_date
+  	<if test="pageSize != null">
+  		limit #{startIndex},#{pageSize}
+  	</if>
+  </select>
+  
+  <select id="total" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	select
+  	count(*)
+  	from jhac_area
+  </select>
+  
+  <select id="search" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	select
+  	<include refid="Base_Column_List" />
+  	from jhac_area
+  	where 1=1
+  	<if test="areaEn !=null and areaEn != ''">
+  		and area_en=#{areaEn}
+  	</if>
+  </select>
+  
+  <select id="queryNotCreate" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	SELECT
+		<include refid="Base_Column_List" />
+	FROM
+		`jhac_area`
+	WHERE
+		area_en NOT IN (
+			SELECT
+				t.tenant_area_code
+			FROM
+				jhac_tenant t
+		)
+	order by area_add_date
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from jhac_area
+    where area_id = #{areaId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.sofun.api.pojo.JhacArea" >
+    insert into jhac_area
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="areaName != null" >
+        area_name,
+      </if>
+      <if test="areaEn != null" >
+        area_en,
+      </if>
+      <if test="areaAddDate != null" >
+        area_add_date,
+      </if>
+      <if test="areaDataStatus != null" >
+        area_data_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="areaId != null" >
+        #{areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaEn != null" >
+        #{areaEn,jdbcType=VARCHAR},
+      </if>
+      <if test="areaAddDate != null" >
+        #{areaAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="areaDataStatus != null" >
+        #{areaDataStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.sofun.api.pojo.JhacArea" >
+    update jhac_area
+    <set >
+      <if test="areaName != null" >
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaEn != null" >
+        area_en = #{areaEn,jdbcType=VARCHAR},
+      </if>
+      <if test="areaAddDate != null" >
+        area_add_date = #{areaAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="areaDataStatus != null" >
+        area_data_status = #{areaDataStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where area_id = #{areaId,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

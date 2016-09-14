@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.JhacUserMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.JhacUser" >
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <!-- <result column="user_password" property="userPassword" jdbcType="VARCHAR" /> -->
+    <result column="user_telephone" property="userTelephone" jdbcType="VARCHAR" />
+    <result column="user_truename" property="userTruename" jdbcType="VARCHAR" />
+    <result column="user_role_id" property="userRoleId" jdbcType="VARCHAR" />
+    <result column="user_area_code" property="userAreaCode" jdbcType="VARCHAR" />
+    <result column="user_status" property="userStatus" jdbcType="INTEGER" />
+    <result column="user_add_date" property="userAddDate" jdbcType="VARCHAR" />
+    <result column="user_data_status" property="userDataStatus" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    user_id, user_name, user_password, user_telephone, user_truename, user_role_id, user_area_code, 
+    user_status, user_add_date, user_data_status
+  </sql>
+  
+  
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhac_user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  
+  <sql id="baseQuery">
+  	select
+  	<include refid="Base_Column_List" />
+  	from jhac_user
+  	where 1=1
+  	<if test="areaCode != null and areaCode !=''">
+	  	<if test="areaCode == 'ALL'">
+	  		and user_area_code !='ALL'
+	  	</if>
+	  	<if test="areaCode != 'ALL'">
+	  		and user_area_code=#{areaCode}
+	  	</if>
+  	</if>
+  	<if test="userName !=null and userName !=''">
+  		and user_name=#{userName}
+  	</if>
+  </sql>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	<include refid="baseQuery" />
+  		order by user_add_date
+  	<if test="pageSize != null">
+  		limit #{startIndex},#{pageSize}
+  	</if>
+  </select>
+  
+  <select id="total" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	select
+  	count(*)
+  	from
+  	(
+  	<include refid="baseQuery" />
+  	) aa
+  </select>
+  
+  <select id="checkLogin" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	select
+  	<include refid="Base_Column_List" />
+  	from jhac_user 
+  	where 1=1
+	and user_name = #{username}
+	and user_password =#{password}
+	<!-- <if test="areaCode != null || areaCode != ''">
+		and user_area_code = #{areaCode}
+	</if> -->
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from jhac_user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+ 
+  <insert id="insert" parameterType="com.sofun.api.pojo.JhacUser" >
+    insert into jhac_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userPassword != null" >
+        user_password,
+      </if>
+      <if test="userTelephone != null" >
+        user_telephone,
+      </if>
+      <if test="userTruename != null" >
+        user_truename,
+      </if>
+      <if test="userRoleId != null" >
+        user_role_id,
+      </if>
+      <if test="userAreaCode != null" >
+        user_area_code,
+      </if>
+      <if test="userStatus != null" >
+        user_status,
+      </if>
+      <if test="userAddDate != null" >
+        user_add_date,
+      </if>
+      <if test="userDataStatus != null" >
+        user_data_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userTelephone != null" >
+        #{userTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="userTruename != null" >
+        #{userTruename,jdbcType=VARCHAR},
+      </if>
+      <if test="userRoleId != null" >
+        #{userRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="userAreaCode != null" >
+        #{userAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userAddDate != null" >
+        #{userAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userDataStatus != null" >
+        #{userDataStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.sofun.api.pojo.JhacUser" >
+    update jhac_user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        user_password = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userTelephone != null" >
+        user_telephone = #{userTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="userTruename != null" >
+        user_truename = #{userTruename,jdbcType=VARCHAR},
+      </if>
+      <if test="userRoleId != null" >
+        user_role_id = #{userRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="userAreaCode != null" >
+        user_area_code = #{userAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        user_status = #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userAddDate != null" >
+        user_add_date = #{userAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userDataStatus != null" >
+        user_data_status = #{userDataStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 冻结用户 -->
+  <update id="frozen" parameterType="java.util.Map">
+  	update jhac_user
+  	set user_status='1'
+  	where user_area_code=#{userAreaCode}
+  </update>
+  
+</mapper>

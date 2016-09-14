@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.JhacSaasOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.JhacSaasOrder" >
+    <id column="jhac_order_id" property="jhacOrderId" jdbcType="VARCHAR" />
+    <result column="jhac_order_pay_user_id" property="jhacOrderPayUserId" jdbcType="VARCHAR" />
+    <result column="jhac_order_checkout_user_id" property="jhacOrderCheckoutUserId" jdbcType="VARCHAR" />
+    <result column="jhac_order_money" property="jhacOrderMoney" jdbcType="REAL" />
+    <result column="jhac_order_time_type" property="jhacOrderTimeType" jdbcType="VARCHAR" />
+    <result column="jhac_order_time_num" property="jhacOrderTimeNum" jdbcType="INTEGER" />
+    <result column="jhac_order_date" property="jhacOrderDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+
+ 
+  <sql id="Base_Column_List" >
+    jhac_order_id, jhac_order_pay_user_id, jhac_order_checkout_user_id, jhac_order_money, 
+    jhac_order_time_type, jhac_order_time_num, jhac_order_date
+  </sql>
+  
+  
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhac_saas_order
+    where jhac_order_id = #{jhacOrderId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhac_saas_order
+    <if test="pageSize != null">
+  		limit #{startIndex},#{pageSize}
+  	</if>
+  	</select>
+  
+  <select id="total" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    select 
+    count(*)
+    from jhac_saas_order
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from jhac_saas_order
+    where jhac_order_id = #{jhacOrderId,jdbcType=VARCHAR}
+  </delete>
+  
+  
+  <insert id="insert" parameterType="com.sofun.api.pojo.JhacSaasOrder" >
+    insert into jhac_saas_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="jhacOrderId != null" >
+        jhac_order_id,
+      </if>
+      <if test="jhacOrderPayUserId != null" >
+        jhac_order_pay_user_id,
+      </if>
+      <if test="jhacOrderCheckoutUserId != null" >
+        jhac_order_checkout_user_id,
+      </if>
+      <if test="jhacOrderMoney != null" >
+        jhac_order_money,
+      </if>
+      <if test="jhacOrderTimeType != null" >
+        jhac_order_time_type,
+      </if>
+      <if test="jhacOrderTimeNum != null" >
+        jhac_order_time_num,
+      </if>
+      <if test="jhacOrderDate != null" >
+        jhac_order_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="jhacOrderId != null" >
+        #{jhacOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="jhacOrderPayUserId != null" >
+        #{jhacOrderPayUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="jhacOrderCheckoutUserId != null" >
+        #{jhacOrderCheckoutUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="jhacOrderMoney != null" >
+        #{jhacOrderMoney,jdbcType=REAL},
+      </if>
+      <if test="jhacOrderTimeType != null" >
+        #{jhacOrderTimeType,jdbcType=VARCHAR},
+      </if>
+      <if test="jhacOrderTimeNum != null" >
+        #{jhacOrderTimeNum,jdbcType=INTEGER},
+      </if>
+      <if test="jhacOrderDate != null" >
+        #{jhacOrderDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+ 
+  <update id="update" parameterType="com.sofun.api.pojo.JhacSaasOrder" >
+    update jhac_saas_order
+    <set >
+      <if test="jhacOrderPayUserId != null" >
+        jhac_order_pay_user_id = #{jhacOrderPayUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="jhacOrderCheckoutUserId != null" >
+        jhac_order_checkout_user_id = #{jhacOrderCheckoutUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="jhacOrderMoney != null" >
+        jhac_order_money = #{jhacOrderMoney,jdbcType=REAL},
+      </if>
+      <if test="jhacOrderTimeType != null" >
+        jhac_order_time_type = #{jhacOrderTimeType,jdbcType=VARCHAR},
+      </if>
+      <if test="jhacOrderTimeNum != null" >
+        jhac_order_time_num = #{jhacOrderTimeNum,jdbcType=INTEGER},
+      </if>
+      <if test="jhacOrderDate != null" >
+        jhac_order_date = #{jhacOrderDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where jhac_order_id = #{jhacOrderId,jdbcType=VARCHAR}
+  </update>
+ 
+</mapper>

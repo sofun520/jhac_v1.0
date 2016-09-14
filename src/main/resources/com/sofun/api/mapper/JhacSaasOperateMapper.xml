@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.JhacSaasOperateMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.JhacSaasOperate" >
+    <id column="operate_id" property="operateId" jdbcType="VARCHAR" />
+    <result column="operate_new_expire_date" property="operateNewExpireDate" jdbcType="TIMESTAMP" />
+    <result column="operate_old_expire_date" property="operateOldExpireDate" jdbcType="TIMESTAMP" />
+    <result column="operate_new_begin_date" property="operateNewBeginDate" jdbcType="TIMESTAMP" />
+    <result column="operate_tenant_id" property="operateTenantId" jdbcType="VARCHAR" />
+    <result column="operate_order_id" property="operateOrderId" jdbcType="VARCHAR" />
+    <result column="operate_date" property="operateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="unionMap" type="com.sofun.api.pojo.JhacSaasOperate" >
+    <id column="operate_id" property="operateId" jdbcType="VARCHAR" />
+    <result column="operate_new_expire_date" property="operateNewExpireDate" jdbcType="TIMESTAMP" />
+    <result column="operate_order_id" property="operateOrderId" jdbcType="VARCHAR" />
+    <association property="saasOrder" javaType="com.sofun.api.pojo.JhacSaasOrder">
+	    <result column="jhac_order_money" property="jhacOrderMoney" jdbcType="REAL" />
+	    <result column="jhac_order_time_type" property="jhacOrderTimeType" jdbcType="VARCHAR" />
+	    <result column="jhac_order_time_num" property="jhacOrderTimeNum" jdbcType="INTEGER" />
+	    <result column="jhac_order_date" property="jhacOrderDate" jdbcType="TIMESTAMP" />
+    </association>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    operate_id, operate_new_expire_date, operate_old_expire_date, operate_new_begin_date, 
+    operate_tenant_id, operate_order_id, operate_date
+  </sql>
+  
+  <select id="unionQuery" resultMap="unionMap" parameterType="java.util.Map">
+  	SELECT
+	*
+	FROM
+		jhac_saas_operate op,
+		jhac_saas_order o
+	WHERE
+		op.operate_order_id = o.jhac_order_id
+	and op.operate_tenant_id=#{tenantId}
+	order by o.jhac_order_date
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	select 
+    <include refid="Base_Column_List" />
+    from jhac_saas_operate
+  </select>
+  
+  
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhac_saas_operate
+    where operate_id = #{operateId,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from jhac_saas_operate
+    where operate_id = #{operateId,jdbcType=VARCHAR}
+  </delete>
+  
+ 
+  <insert id="insert" parameterType="com.sofun.api.pojo.JhacSaasOperate" >
+    insert into jhac_saas_operate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="operateId != null" >
+        operate_id,
+      </if>
+      <if test="operateNewExpireDate != null" >
+        operate_new_expire_date,
+      </if>
+      <if test="operateOldExpireDate != null" >
+        operate_old_expire_date,
+      </if>
+      <if test="operateNewBeginDate != null" >
+        operate_new_begin_date,
+      </if>
+      <if test="operateTenantId != null" >
+        operate_tenant_id,
+      </if>
+      <if test="operateOrderId != null" >
+        operate_order_id,
+      </if>
+      <if test="operateDate != null" >
+        operate_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="operateId != null" >
+        #{operateId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateNewExpireDate != null" >
+        #{operateNewExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateOldExpireDate != null" >
+        #{operateOldExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateNewBeginDate != null" >
+        #{operateNewBeginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateTenantId != null" >
+        #{operateTenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateOrderId != null" >
+        #{operateOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateDate != null" >
+        #{operateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.sofun.api.pojo.JhacSaasOperate" >
+    update jhac_saas_operate
+    <set >
+      <if test="operateNewExpireDate != null" >
+        operate_new_expire_date = #{operateNewExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateOldExpireDate != null" >
+        operate_old_expire_date = #{operateOldExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateNewBeginDate != null" >
+        operate_new_begin_date = #{operateNewBeginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateTenantId != null" >
+        operate_tenant_id = #{operateTenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateOrderId != null" >
+        operate_order_id = #{operateOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateDate != null" >
+        operate_date = #{operateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where operate_id = #{operateId,jdbcType=VARCHAR}
+  </update>
+ 
+</mapper>

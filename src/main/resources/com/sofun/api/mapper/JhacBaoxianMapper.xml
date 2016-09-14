@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.JhacBaoxianMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.JhacBaoxian" >
+    <id column="bao_id" property="baoId" jdbcType="VARCHAR" />
+    <result column="bao_ids" property="baoIds" jdbcType="VARCHAR" />
+    <result column="bao_shouyiren" property="baoShouyiren" jdbcType="VARCHAR" />
+    <result column="bao_out_id" property="baoOutId" jdbcType="VARCHAR" />
+    <result column="bao_area_code" property="baoAreaCode" jdbcType="VARCHAR" />
+    <result column="bao_is_print" property="baoIsPrint" jdbcType="INTEGER" />
+    <result column="bao_add_date" property="baoAddDate" jdbcType="VARCHAR" />
+    <result column="bao_data_status" property="baoDataStatus" jdbcType="INTEGER" />
+    <result column="bao_start_date" property="baoStartDate" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    bao_id, bao_ids, bao_shouyiren, bao_out_id, bao_area_code, bao_is_print, bao_add_date, 
+    bao_data_status, bao_start_date
+  </sql>
+
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhac_baoxian
+    where bao_id = #{baoId,jdbcType=VARCHAR}
+  </select>
+  
+  <sql id="baseQuery">
+  	select
+  	<include refid="Base_Column_List" />
+  	from jhac_baoxian
+  	where 1=1
+  	<if test="areaCode != null">
+  		and bao_area_code=#{areaCode}
+  	</if>
+  </sql>
+  
+   <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	<include refid="baseQuery" />
+  	order by bao_add_date
+  	<if test="pageSize != null">
+  		limit #{startIndex},#{pageSize}
+  	</if>
+  </select>
+  
+  <select id="total" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	select
+  	count(*)
+  	from
+  	(
+  	<include refid="baseQuery"></include>
+  	) aa
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from jhac_baoxian
+    where bao_id = #{baoId,jdbcType=VARCHAR}
+  </delete>
+ 
+  <insert id="insert" parameterType="com.sofun.api.pojo.JhacBaoxian" >
+    insert into jhac_baoxian
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="baoId != null" >
+        bao_id,
+      </if>
+      <if test="baoIds != null" >
+        bao_ids,
+      </if>
+      <if test="baoShouyiren != null" >
+        bao_shouyiren,
+      </if>
+      <if test="baoOutId != null" >
+        bao_out_id,
+      </if>
+      <if test="baoAreaCode != null" >
+        bao_area_code,
+      </if>
+      <if test="baoIsPrint != null" >
+        bao_is_print,
+      </if>
+      <if test="baoAddDate != null" >
+        bao_add_date,
+      </if>
+      <if test="baoDataStatus != null" >
+        bao_data_status,
+      </if>
+      <if test="baoStartDate != null" >
+        bao_start_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="baoId != null" >
+        #{baoId,jdbcType=VARCHAR},
+      </if>
+      <if test="baoIds != null" >
+        #{baoIds,jdbcType=VARCHAR},
+      </if>
+      <if test="baoShouyiren != null" >
+        #{baoShouyiren,jdbcType=VARCHAR},
+      </if>
+      <if test="baoOutId != null" >
+        #{baoOutId,jdbcType=VARCHAR},
+      </if>
+      <if test="baoAreaCode != null" >
+        #{baoAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="baoIsPrint != null" >
+        #{baoIsPrint,jdbcType=INTEGER},
+      </if>
+      <if test="baoAddDate != null" >
+        #{baoAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="baoDataStatus != null" >
+        #{baoDataStatus,jdbcType=INTEGER},
+      </if>
+      <if test="baoStartDate != null" >
+        #{baoStartDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="update" parameterType="com.sofun.api.pojo.JhacBaoxian" >
+    update jhac_baoxian
+    <set >
+      <if test="baoIds != null" >
+        bao_ids = #{baoIds,jdbcType=VARCHAR},
+      </if>
+      <if test="baoShouyiren != null" >
+        bao_shouyiren = #{baoShouyiren,jdbcType=VARCHAR},
+      </if>
+      <if test="baoOutId != null" >
+        bao_out_id = #{baoOutId,jdbcType=VARCHAR},
+      </if>
+      <if test="baoAreaCode != null" >
+        bao_area_code = #{baoAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="baoIsPrint != null" >
+        bao_is_print = #{baoIsPrint,jdbcType=INTEGER},
+      </if>
+      <if test="baoAddDate != null" >
+        bao_add_date = #{baoAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="baoDataStatus != null" >
+        bao_data_status = #{baoDataStatus,jdbcType=INTEGER},
+      </if>
+      <if test="baoStartDate != null" >
+        bao_start_date = #{baoStartDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bao_id = #{baoId,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

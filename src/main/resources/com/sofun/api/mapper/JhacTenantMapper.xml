@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.JhacTenantMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.JhacTenant" >
+    <id column="tenant_id" property="tenantId" jdbcType="VARCHAR" />
+    <result column="tenant_operate_user" property="tenantOperateUser" jdbcType="VARCHAR" />
+    <result column="tenant_area_code" property="tenantAreaCode" jdbcType="VARCHAR" />
+    <result column="tenant_begin_date" property="tenantBeginDate" jdbcType="TIMESTAMP" />
+    <result column="tenant_expire_date" property="tenantExpireDate" jdbcType="TIMESTAMP" />
+    <result column="tenant_status" property="tenantStatus" jdbcType="INTEGER" />
+    <result column="tenant_operate_date" property="tenantOperateDate" jdbcType="TIMESTAMP" />
+  	<association property="user" javaType="com.sofun.api.pojo.JhacUser">
+    	<result column="user_truename" property="userTruename" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+ 
+  <sql id="Base_Column_List" >
+    tenant_id, tenant_operate_user, tenant_area_code, tenant_begin_date, tenant_expire_date, 
+    tenant_status, tenant_operate_date
+  </sql>
+  
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhac_tenant
+    where tenant_id = #{tenantId,jdbcType=VARCHAR}
+  </select>
+  
+    <sql id="baseQuery">
+	  	SELECT
+			*
+		FROM
+			jhac_tenant t,
+			jhac_user u
+		WHERE
+			t.tenant_operate_user = u.user_id
+	</sql>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    <include refid="baseQuery" />
+    <if test="tenantStatus != null">
+    	and tenant_status=#{tenantStatus}
+    </if>
+    order by tenant_operate_date
+    <if test="pageSize != null">
+  		limit #{startIndex},#{pageSize}
+  	</if>
+  </select>
+  
+  <select id="total" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    select 
+    count(*)
+    from
+    (
+    <include refid="baseQuery" />
+    ) aa
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from jhac_tenant
+    where tenant_id = #{tenantId,jdbcType=VARCHAR}
+  </delete>
+ 
+  <insert id="insert" parameterType="com.sofun.api.pojo.JhacTenant" >
+    insert into jhac_tenant
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tenantId != null" >
+        tenant_id,
+      </if>
+      <if test="tenantOperateUser != null" >
+        tenant_operate_user,
+      </if>
+      <if test="tenantAreaCode != null" >
+        tenant_area_code,
+      </if>
+      <if test="tenantBeginDate != null" >
+        tenant_begin_date,
+      </if>
+      <if test="tenantExpireDate != null" >
+        tenant_expire_date,
+      </if>
+      <if test="tenantStatus != null" >
+        tenant_status,
+      </if>
+      <if test="tenantOperateDate != null" >
+        tenant_operate_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantOperateUser != null" >
+        #{tenantOperateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantAreaCode != null" >
+        #{tenantAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantBeginDate != null" >
+        #{tenantBeginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tenantExpireDate != null" >
+        #{tenantExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tenantStatus != null" >
+        #{tenantStatus,jdbcType=INTEGER},
+      </if>
+      <if test="tenantOperateDate != null" >
+        #{tenantOperateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+ 
+  <update id="update" parameterType="com.sofun.api.pojo.JhacTenant" >
+    update jhac_tenant
+    <set >
+      <if test="tenantOperateUser != null" >
+        tenant_operate_user = #{tenantOperateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantAreaCode != null" >
+        tenant_area_code = #{tenantAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantBeginDate != null" >
+        tenant_begin_date = #{tenantBeginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tenantExpireDate != null" >
+        tenant_expire_date = #{tenantExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tenantStatus != null" >
+        tenant_status = #{tenantStatus,jdbcType=INTEGER},
+      </if>
+      <if test="tenantOperateDate != null" >
+        tenant_operate_date = #{tenantOperateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where tenant_id = #{tenantId,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

@@ -1,0 +1,192 @@
+{
+    "total": 17,
+    "rows": [
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":20,\"appName\":\"hylm\",\"majorVersion\":\"0.5.0\",\"minorVersion\":\"20151030_01\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/somayun-bin-repo/releases/hylm/V1/HY_HYLM_T_0.5.0_20151030_01.zip\",\"md5\":\"3226b0d7fe0214c1fb86388b753909af\"}]",
+            "created": "2015-07-26 06:37",
+            "description": "HYLM V1发布版本 By Zhanghao",
+            "id": 1,
+            "majorVersion": "HYLM-V1",
+            "minorVersion": "Build1-20150725223611",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        },
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":21,\"appName\":\"hylm\",\"majorVersion\":\"0.5.0\",\"minorVersion\":\"20151030_01\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/somayun-bin-repo/releases/hylm/V1/HY_HYLM_T_0.5.0_20151030_01.zip\",\"md5\":\"ac23c4e66c1b393a5c4872670c3117bf\"}]",
+            "created": "2015-07-27 19:59",
+            "description": "By Jason",
+            "id": 5,
+            "majorVersion": "HYLM-V3",
+            "minorVersion": "Build2-201507261159",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        },
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":24,\"appName\":\"hylm\",\"majorVersion\":\"0.5\",\"minorVersion\":\"4\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/haiyi-trunk/V0.5.0/02-hylm/hylm/D/HY_HYLM_D_0.5.4_20151126.zip\",\"md5\":\"23bf132a75da4ebebbe0ba59569abbb7\"}]",
+            "created": "2015-11-10 14:39",
+            "description": "验正FIT2Cloud SASC发布流程",
+            "id": 7,
+            "majorVersion": "0.5.0",
+            "minorVersion": "20151102_01",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        },
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":25,\"appName\":\"hylm\",\"majorVersion\":\"0.5\",\"minorVersion\":\"7\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/haiyi-trunk/V0.5.0/02-hylm/hylm/D/HY_HYLM_D_0.5.7_20151203.zip\",\"md5\":\"81304eeea99fc140f7488ccb61330c86\"}]",
+            "created": "2015-12-03 10:31",
+            "description": "测试hylm接口",
+            "id": 8,
+            "majorVersion": "0.5",
+            "minorVersion": "7",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        },
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":27,\"appName\":\"hylm\",\"majorVersion\":\"0.5\",\"minorVersion\":\"9\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/haiyi-trunk/V0.5.0/02-hylm/hylm/D/HY_HYLM_D_0.5.9_20151208.zip\",\"md5\":\"4037e1acdfeb606cd96f37568367aea0\"}]",
+            "created": "2015-12-08 11:12",
+            "description": "测试nginx",
+            "id": 9,
+            "majorVersion": "0.5",
+            "minorVersion": "8",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        },
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":28,\"appName\":\"hylm\",\"majorVersion\":\"0.5\",\"minorVersion\":\"10\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/haiyi-trunk/V0.5.0/02-hylm/hylm/D/HY_HYLM_D_0.5.10_20151211.zip\",\"md5\":\"74d410199c83281166475bdb620756d6\"}]",
+            "created": "2015-12-11 16:50",
+            "description": "测试时区",
+            "id": 10,
+            "majorVersion": "0.5",
+            "minorVersion": "10",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        },
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":30,\"appName\":\"hylm\",\"majorVersion\":\"0.5\",\"minorVersion\":\"12\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/haiyi-trunk/V0.5.0/02-hylm/hylm/D/HY_HYLM_D_0.5.12_20151215.zip\",\"md5\":\"50dee086a1a9aa136b312d14258c82bc\"}]",
+            "created": "2015-12-15 12:44",
+            "description": "张浩测试",
+            "id": 11,
+            "majorVersion": "0.5",
+            "minorVersion": "11",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        },
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":31,\"appName\":\"hylm\",\"majorVersion\":\"0.5\",\"minorVersion\":\"13\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/haiyi-trunk/V0.5.0/02-hylm/hylm/D/HY_HYLM_D_0.5.13_20151215.zip\",\"md5\":\"1958a89ad31db5eb13b016723ca854be\"}]",
+            "created": "2015-12-15 15:33",
+            "description": "开发自测hylm升级(pengliua)",
+            "id": 12,
+            "majorVersion": "0.5",
+            "minorVersion": "13",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        },
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":32,\"appName\":\"hylm\",\"majorVersion\":\"0.5\",\"minorVersion\":\"14\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/haiyi-trunk/V0.5.0/02-hylm/hylm/D/HY_HYLM_D_0.5.14_20151215.zip\",\"md5\":\"61daca4facb50f0bfb639cc55ce09f3d\"}]",
+            "created": "2015-12-15 17:40",
+            "description": "张浩测试2",
+            "id": 13,
+            "majorVersion": "0.5",
+            "minorVersion": "14",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        },
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":33,\"appName\":\"hylm\",\"majorVersion\":\"0.5\",\"minorVersion\":\"14\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/haiyi-trunk/V0.5.0/02-hylm/hylm/D/HY_HYLM_D_0.5.14_20151315.zip\",\"md5\":\"61daca4facb50f0bfb639cc55ce09f3d\"}]",
+            "created": "2015-12-15 18:50",
+            "description": "测试升级流程-下载失败场景（pengliua）",
+            "id": 15,
+            "majorVersion": "0.5",
+            "minorVersion": "15",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        },
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":35,\"appName\":\"hylm\",\"majorVersion\":\"0.5\",\"minorVersion\":\"17\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/haiyi-trunk/V0.5.0/02-hylm/hylm/D/HY_HYLM_D_0.5.17_20151217.zip\",\"md5\":\"c1df33e83c64d48b677397003e243b72\"}]",
+            "created": "2015-12-17 10:42",
+            "description": "测试升级回滚--配置脚本数和war包中不一致",
+            "id": 16,
+            "majorVersion": "0.5",
+            "minorVersion": "16",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        },
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":37,\"appName\":\"hylm\",\"majorVersion\":\"0.5\",\"minorVersion\":\"19\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/haiyi-trunk/V0.5.0/02-hylm/hylm/D/HY_HYLM_D_0.5.19_20151217.zip\",\"md5\":\"b71c40f70988104c478afdbc97f1bba9\"}]",
+            "created": "2015-12-17 16:09",
+            "description": "测试升级流程-应用启失败场景（pengliua）",
+            "id": 17,
+            "majorVersion": "0.5",
+            "minorVersion": "18",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        },
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":38,\"appName\":\"hylm\",\"majorVersion\":\"0.5\",\"minorVersion\":\"23\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/haiyi-trunk/V0.5.0/02-hylm/hylm/D/HY_HYLM_D_0.5.23_20151223.zip\",\"md5\":\"32befc8592d6ff1437f76d73ebf1530a\"}]",
+            "created": "2015-12-23 18:57",
+            "description": "验证整合脚本",
+            "id": 18,
+            "majorVersion": "0.5",
+            "minorVersion": "23",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        },
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":40,\"appName\":\"hylm\",\"majorVersion\":\"0.5\",\"minorVersion\":\"25\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/haiyi-trunk/V0.5.0/02-hylm/hylm/D/HY_HYLM_D_0.5.25_20151224.zip\",\"md5\":\"e9e7dd5313b79eba0ecfc7b7c1a401db\"}]",
+            "created": "2015-12-24 09:04",
+            "description": "给合过脚本的物流流程升级",
+            "id": 19,
+            "majorVersion": "0.5",
+            "minorVersion": "24",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        },
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":41,\"appName\":\"hylm\",\"majorVersion\":\"0.5\",\"minorVersion\":\"26\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/haiyi-trunk/V0.5.0/02-hylm/hylm/D/HY_HYLM_D_0.5.26_20151224.zip\",\"md5\":\"4a2b4ace88e9425ef915f3f379f2f6e7\"}]",
+            "created": "2015-12-24 11:39",
+            "description": "整合脚本第二次验证升级",
+            "id": 20,
+            "majorVersion": "0.5",
+            "minorVersion": "26",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        },
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":43,\"appName\":\"hylm\",\"majorVersion\":\"0.5\",\"minorVersion\":\"28\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/haiyi-trunk/V0.5.0/02-hylm/hylm/D/HY_HYLM_D_0.5.28_20151224.zip\",\"md5\":\"bc6dacfa938cb121e016aad5bc6ec04d\"}]",
+            "created": "2015-12-24 17:06",
+            "description": "dev 环境 升级（整合脚本后）",
+            "id": 21,
+            "majorVersion": "0.5",
+            "minorVersion": "27",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        },
+        {
+            "appVersionNum": 1,
+            "appVersions": "[{\"id\":44,\"appName\":\"hylm\",\"majorVersion\":\"0.5\",\"minorVersion\":\"30\",\"downloadUrl\":\"https://s3.cn-north-1.amazonaws.com.cn/haiyi-trunk/V0.5.0/02-hylm/hylm/D/HY_HYLM_D_0.5.30_20151225.zip\",\"md5\":\"8d1dd60eac3f29763d690253f11e277d\"}]",
+            "created": "2015-12-25 17:47",
+            "description": "dev 环境12 升级（整合脚本后）",
+            "id": 22,
+            "majorVersion": "0.5",
+            "minorVersion": "30",
+            "saasType": "HYLM",
+            "usageType": "PRODUCTION"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+[
+{"text":"<a href=\"javascript:void()\" onclick=\"subMenue(1)\">基础数据管理</a>"},
+{"text":"<a href=\"javascript:void()\" onclick=\"subMenue(2)\">保险管理</a>"},
+{"text":"<a href=\"javascript:void()\" onclick=\"subMenue(3)\">装车业务</a>"},
+{"text":"<a href=\"javascript:void()\" onclick=\"subMenue(4)\">其他信息</a>"}
+]

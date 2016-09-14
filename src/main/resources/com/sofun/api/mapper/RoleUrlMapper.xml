@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.RoleUrlMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.RoleUrl" >
+    <id column="ru_id" property="ruId" jdbcType="VARCHAR" />
+    <result column="ru_role_id" property="ruRoleId" jdbcType="VARCHAR" />
+    <result column="ru_url_id" property="ruUrlId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="roleUrlUnionMap" type="com.sofun.api.pojo.RoleUrl" >
+    <id column="ru_id" property="ruId" jdbcType="VARCHAR" />
+    <collection property="urls" column="ru_url_id" javaType="com.sofun.api.pojo.JhacUrl">
+    	<result column="url_name" property="urlName" jdbcType="VARCHAR" />
+	    <result column="url_parent" property="urlParent" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ru_id, ru_role_id, ru_url_id
+  </sql>
+  
+  <select id="roleMenuList" resultMap="roleUrlUnionMap" parameterType="java.util.Map">
+  	SELECT
+		ru.ru_id,
+		u.url_name,
+		u.url_parent
+	FROM
+		`role_url` ru,
+		jhac_url u
+	WHERE
+		ru.ru_url_id = u.url_id
+	AND ru.ru_role_id = #{roleId}
+	order by u.url_parent
+  </select>
+  
+  
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from role_url
+    where ru_id = #{ruId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from role_url
+  </select>
+  
+  <select id="total" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    select 
+    count(*)
+    from role_url
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from role_url
+    where ru_id = #{ruId,jdbcType=VARCHAR}
+  </delete>
+  
+ 
+  <insert id="insert" parameterType="com.sofun.api.pojo.RoleUrl" >
+    insert into role_url
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ruId != null" >
+        ru_id,
+      </if>
+      <if test="ruRoleId != null" >
+        ru_role_id,
+      </if>
+      <if test="ruUrlId != null" >
+        ru_url_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ruId != null" >
+        #{ruId,jdbcType=VARCHAR},
+      </if>
+      <if test="ruRoleId != null" >
+        #{ruRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="ruUrlId != null" >
+        #{ruUrlId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+ 
+  <update id="update" parameterType="com.sofun.api.pojo.RoleUrl" >
+    update role_url
+    <set >
+      <if test="ruRoleId != null" >
+        ru_role_id = #{ruRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="ruUrlId != null" >
+        ru_url_id = #{ruUrlId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ru_id = #{ruId,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

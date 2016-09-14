@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.JhacCustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.JhacCustomer" >
+    <id column="cus_id" property="cusId" jdbcType="VARCHAR" />
+    <result column="cus_name" property="cusName" jdbcType="VARCHAR" />
+    <result column="cus_identify" property="cusIdentify" jdbcType="VARCHAR" />
+    <result column="cus_telephone" property="cusTelephone" jdbcType="VARCHAR" />
+    <result column="cus_address" property="cusAddress" jdbcType="VARCHAR" />
+    <result column="cus_id_pic" property="cusIdPic" jdbcType="VARCHAR" />
+    <result column="cus_out_id" property="cusOutId" jdbcType="VARCHAR" />
+    <result column="cus_add_date" property="cusAddDate" jdbcType="VARCHAR" />
+    <result column="cus_data_status" property="cusDataStatus" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    cus_id, cus_name, cus_identify, cus_telephone, cus_address, cus_id_pic, cus_out_id, 
+    cus_add_date, cus_data_status
+  </sql>
+  
+  
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhac_customer
+    where cus_id = #{cusId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	select
+  	<include refid="Base_Column_List" />
+  	from jhac_customer
+  	where 1=1
+  	<if test="cusName !=null">
+  		and cus_name like '%${cusName}%'
+  	</if>
+  	<if test="cusTelephone !=null">
+  		and cus_telephone = #{cusTelephone}
+  	</if>
+  	<if test="cusOutId != null and cusOutId != ''">
+  		and cus_out_id = #{cusOutId}
+  	</if>
+  	order by cus_add_date
+  	<if test="pageSize != null">
+  		limit #{startIndex},#{pageSize}
+  	</if>
+  </select>
+  
+  <select id="total" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	select
+  	count(*)
+  	from jhac_customer
+  	where 1=1
+  	<if test="cusName !=null">
+  		and cus_name like '%${cusName}%'
+  	</if>
+  	<if test="cusTelephone !=null">
+  		and cus_telephone=#{cusTelephone}
+  	</if>
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from jhac_customer
+    where cus_id = #{cusId,jdbcType=VARCHAR}
+  </delete>
+  
+  
+  <insert id="insert" parameterType="com.sofun.api.pojo.JhacCustomer" >
+    insert into jhac_customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cusId != null" >
+        cus_id,
+      </if>
+      <if test="cusName != null" >
+        cus_name,
+      </if>
+      <if test="cusIdentify != null" >
+        cus_identify,
+      </if>
+      <if test="cusTelephone != null" >
+        cus_telephone,
+      </if>
+      <if test="cusAddress != null" >
+        cus_address,
+      </if>
+      <if test="cusIdPic != null" >
+        cus_id_pic,
+      </if>
+      <if test="cusOutId != null" >
+        cus_out_id,
+      </if>
+      <if test="cusAddDate != null" >
+        cus_add_date,
+      </if>
+      <if test="cusDataStatus != null" >
+        cus_data_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cusId != null" >
+        #{cusId,jdbcType=VARCHAR},
+      </if>
+      <if test="cusName != null" >
+        #{cusName,jdbcType=VARCHAR},
+      </if>
+      <if test="cusIdentify != null" >
+        #{cusIdentify,jdbcType=VARCHAR},
+      </if>
+      <if test="cusTelephone != null" >
+        #{cusTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="cusAddress != null" >
+        #{cusAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cusIdPic != null" >
+        #{cusIdPic,jdbcType=VARCHAR},
+      </if>
+      <if test="cusOutId != null" >
+        #{cusOutId,jdbcType=VARCHAR},
+      </if>
+      <if test="cusAddDate != null" >
+        #{cusAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cusDataStatus != null" >
+        #{cusDataStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.sofun.api.pojo.JhacCustomer" >
+    update jhac_customer
+    <set >
+      <if test="cusName != null" >
+        cus_name = #{cusName,jdbcType=VARCHAR},
+      </if>
+      <if test="cusIdentify != null" >
+        cus_identify = #{cusIdentify,jdbcType=VARCHAR},
+      </if>
+      <if test="cusTelephone != null" >
+        cus_telephone = #{cusTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="cusAddress != null" >
+        cus_address = #{cusAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cusIdPic != null" >
+        cus_id_pic = #{cusIdPic,jdbcType=VARCHAR},
+      </if>
+      <if test="cusOutId != null" >
+        cus_out_id = #{cusOutId,jdbcType=VARCHAR},
+      </if>
+      <if test="cusAddDate != null" >
+        cus_add_date = #{cusAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cusDataStatus != null" >
+        cus_data_status = #{cusDataStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cus_id = #{cusId,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

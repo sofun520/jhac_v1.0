@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.JhacOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.JhacOrder" >
+    <id column="or_id" property="orId" jdbcType="VARCHAR" />
+    <result column="or_user_id" property="orUserId" jdbcType="VARCHAR" />
+    <result column="or_add_date" property="orAddDate" jdbcType="VARCHAR" />
+    <result column="or_area_code" property="orAreaCode" jdbcType="VARCHAR" />
+    <result column="or_status" property="orStatus" jdbcType="INTEGER" />
+    <result column="or_data_status" property="orDataStatus" jdbcType="INTEGER" />
+    <result column="or_sum" property="orSum" jdbcType="DOUBLE" />
+    <association property="user" javaType="com.sofun.api.pojo.JhacUser">
+    	<result column="user_truename" property="userTruename" jdbcType="VARCHAR" />
+    	<result column="user_telephone" property="userTelephone" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    or_id, or_user_id, or_add_date, or_area_code, or_status, or_data_status,or_sum
+  </sql>
+  
+  <select id="getCode" statementType="CALLABLE" parameterType="java.util.Map" resultType="java.lang.String">
+  	<![CDATA[  
+	    {call  jhac6.test(#{prefix,jdbcType=VARCHAR,mode=IN},#{xcode,jdbcType=VARCHAR,mode=OUT})}
+	]]>
+  </select>
+  
+  <sql id="baseQuery">
+  	SELECT
+		o.*,u.user_truename,u.user_telephone,a.area_name
+	FROM
+		jhac_order o,
+		jhac_user u,
+		jhac_area a
+	WHERE
+		o.or_user_id = u.user_id
+	AND o.or_area_code = a.area_en
+	<if test="areaCode != null and areaCode !=''">
+		and o.or_area_code=#{areaCode}
+	</if>
+	<if test="startDate != null and startDate !=''">
+		and or_add_date &gt;= #{startDate}
+	</if>
+	<if test="endDate != null and endDate !=''">
+		and or_add_date &lt;= #{endDate}
+	</if>
+	<if test="orId != null and orId != ''">
+		and or_id=#{orId}
+	</if>
+	<if test="orStatus !=null and orStatus != ''">
+		and or_status=#{orStatus}
+	</if>
+	<if test="orStatus ==null or orStatus == ''">
+		and or_status != 4
+	</if>
+  </sql>
+ 
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhac_order
+    where or_id = #{orId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	<include refid="baseQuery" />
+  	order by or_add_date
+  	<if test="pageSize != null">
+  		limit #{startIndex},#{pageSize}
+  	</if>
+  </select>
+  
+  <select id="total" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	select
+  	count(*)
+  	from
+  	(
+  	<include refid="baseQuery" />
+  	) aa
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from jhac_order
+    where or_id = #{orId,jdbcType=VARCHAR}
+  </delete>
+  
+  
+  <insert id="insert" parameterType="com.sofun.api.pojo.JhacOrder" >
+    insert into jhac_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orId != null" >
+        or_id,
+      </if>
+      <if test="orUserId != null" >
+        or_user_id,
+      </if>
+      <if test="orAddDate != null" >
+        or_add_date,
+      </if>
+      <if test="orAreaCode != null" >
+        or_area_code,
+      </if>
+      <if test="orStatus != null" >
+        or_status,
+      </if>
+      <if test="orDataStatus != null" >
+        or_data_status,
+      </if>
+      <if test="orSum != null" >
+        or_sum,
+      </if>
+      <if test="orOperateId != null" >
+        or_operate_id,
+      </if>
+      <if test="orOperateDate != null" >
+        or_operate_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orId != null" >
+        #{orId,jdbcType=VARCHAR},
+      </if>
+      <if test="orUserId != null" >
+        #{orUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="orAddDate != null" >
+        #{orAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orAreaCode != null" >
+        #{orAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orStatus != null" >
+        #{orStatus,jdbcType=INTEGER},
+      </if>
+      <if test="orDataStatus != null" >
+        #{orDataStatus,jdbcType=INTEGER},
+      </if>
+      <if test="orSum != null" >
+        #{orSum,jdbcType=DOUBLE},
+      </if>
+      <if test="orOperateId != null" >
+        #{orOperateId,jdbcType=VARCHAR},
+      </if>
+      <if test="orOperateDate != null" >
+        #{orOperateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.sofun.api.pojo.JhacOrder" >
+    update jhac_order
+    <set >
+      <if test="orUserId != null" >
+        or_user_id = #{orUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="orAddDate != null" >
+        or_add_date = #{orAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orAreaCode != null" >
+        or_area_code = #{orAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orStatus != null" >
+        or_status = #{orStatus,jdbcType=INTEGER},
+      </if>
+      <if test="orDataStatus != null" >
+        or_data_status = #{orDataStatus,jdbcType=INTEGER},
+      </if>
+      <if test="orSum != null" >
+        or_sum = #{orSum,jdbcType=DOUBLE},
+      </if>
+      <if test="orOperateId != null" >
+        or_operate_id = #{orOperateId,jdbcType=VARCHAR},
+      </if>
+      <if test="orOperateDate != null" >
+        or_operate_date = #{orOperateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where or_id = #{orId,jdbcType=VARCHAR}
+  </update>
+ 
+</mapper>

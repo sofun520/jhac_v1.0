@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.JhacTurnvisitMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.JhacTurnvisit" >
+    <id column="tur_id" property="turId" jdbcType="VARCHAR" />
+    <result column="tur_type" property="turType" jdbcType="INTEGER" />
+    <result column="tur_out_id" property="turOutId" jdbcType="VARCHAR" />
+    <result column="tur_is_visit" property="turIsVisit" jdbcType="INTEGER" />
+    <result column="tur_add_date" property="turAddDate" jdbcType="VARCHAR" />
+    <result column="tur_area_code" property="turAreaCode" jdbcType="VARCHAR" />
+    <association property="customer" javaType="com.sofun.api.pojo.JhacCustomer">
+    	<result column="cus_name" property="cusName" jdbcType="VARCHAR" />
+	    <result column="cus_telephone" property="cusTelephone" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+ 
+  <sql id="Base_Column_List" >
+    tur_id, tur_type, tur_out_id, tur_is_visit, tur_add_date, tur_area_code
+  </sql>
+  
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhac_turnvisit
+    where tur_id = #{turId,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- select
+  	<include refid="Base_Column_List" />
+  	from jhac_turnvisit -->
+  <sql id="baseQuery">
+	  	SELECT
+		t.*,c.cus_name,c.cus_telephone
+	FROM
+		jhac_turnvisit t
+	LEFT JOIN jhac_customer c ON t.tur_out_id = c.cus_out_id
+  	where 1=1
+  	<if test="turnIsVisit != null and turnIsVisit != ''">
+  		and tur_is_visit = #{turnIsVisit}
+  	</if>
+  	<if test="turnIsVisit == null or turnIsVisit == ''">
+  		and tur_is_visit = 0
+  	</if>
+  	<if test="areaCode != null and areaCode != ''">
+  		and tur_area_code = #{areaCode}
+  	</if>
+  </sql>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	<include refid="baseQuery" />
+  	order by tur_add_date
+  	<if test="pageSize != null">
+  		limit #{startIndex},#{pageSize}
+  	</if>
+  </select>
+  
+  <select id="total" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	select
+  	count(*)
+  	from
+  	(
+  	<include refid="baseQuery" />
+  	) aa
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from jhac_turnvisit
+    where tur_id = #{turId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.sofun.api.pojo.JhacTurnvisit" >
+    insert into jhac_turnvisit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="turId != null" >
+        tur_id,
+      </if>
+      <if test="turType != null" >
+        tur_type,
+      </if>
+      <if test="turOutId != null" >
+        tur_out_id,
+      </if>
+      <if test="turIsVisit != null" >
+        tur_is_visit,
+      </if>
+      <if test="turAddDate != null" >
+        tur_add_date,
+      </if>
+      <if test="turAreaCode != null" >
+        tur_area_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="turId != null" >
+        #{turId,jdbcType=VARCHAR},
+      </if>
+      <if test="turType != null" >
+        #{turType,jdbcType=INTEGER},
+      </if>
+      <if test="turOutId != null" >
+        #{turOutId,jdbcType=VARCHAR},
+      </if>
+      <if test="turIsVisit != null" >
+        #{turIsVisit,jdbcType=INTEGER},
+      </if>
+      <if test="turAddDate != null" >
+        #{turAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="turAreaCode != null" >
+        #{turAreaCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.sofun.api.pojo.JhacTurnvisit" >
+    update jhac_turnvisit
+    <set >
+      <if test="turType != null" >
+        tur_type = #{turType,jdbcType=INTEGER},
+      </if>
+      <if test="turOutId != null" >
+        tur_out_id = #{turOutId,jdbcType=VARCHAR},
+      </if>
+      <if test="turIsVisit != null" >
+        tur_is_visit = #{turIsVisit,jdbcType=INTEGER},
+      </if>
+      <if test="turAddDate != null" >
+        tur_add_date = #{turAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="turAreaCode != null" >
+        tur_area_code = #{turAreaCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tur_id = #{turId,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

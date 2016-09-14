@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.JhacOrderDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.JhacOrderDetail" >
+    <id column="ord_id" property="ordId" jdbcType="VARCHAR" />
+    <result column="ord_ids" property="ordIds" jdbcType="VARCHAR" />
+    <result column="ord_name" property="ordName" jdbcType="VARCHAR" />
+    <result column="ord_num" property="ordNum" jdbcType="INTEGER" />
+    <result column="ord_data_status" property="ordDataStatus" jdbcType="INTEGER" />
+    <result column="ord_xinghao" property="ordXinghao" jdbcType="VARCHAR" />
+    <result column="ord_add_date" property="ordAddDate" jdbcType="VARCHAR" />
+    <result column="ord_price" property="ordPrice" jdbcType="DOUBLE" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ord_id, ord_ids, ord_name, ord_num, ord_add_date,ord_data_status
+  </sql>
+  
+  
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhac_order_detail
+    where ord_id = #{ordId,jdbcType=VARCHAR}
+  </select>
+  
+  <sql id="baseQuery">
+  	SELECT
+		*
+	FROM
+		`jhac_order_detail` od
+	WHERE
+		1=1
+  	<if test="ordIds != null and ordIds !=''">
+  		and od.ord_ids=#{ordIds}
+  	</if>
+  	order by ord_add_date
+  </sql>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	<include refid="baseQuery" />
+  	<if test="pageSize != null">
+  		limit #{startIndex},#{pageSize}
+  	</if>
+  </select>
+  
+  <select id="total" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	select
+  	count(*)
+  	from
+  	(
+  	<include refid="baseQuery" />
+  	) aa
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from jhac_order_detail
+    where ord_id = #{ordId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.sofun.api.pojo.JhacOrderDetail" >
+    insert into jhac_order_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ordId != null" >
+        ord_id,
+      </if>
+      <if test="ordIds != null" >
+        ord_ids,
+      </if>
+      <if test="ordName != null" >
+        ord_name,
+      </if>
+      <if test="ordNum != null" >
+        ord_num,
+      </if>
+      <if test="ordDataStatus != null" >
+        ord_data_status,
+      </if>
+      <if test="ordXinghao != null" >
+        ord_xinghao,
+      </if>
+      <if test="ordPrice != null" >
+        ord_price,
+      </if>
+      <if test="ordAddDate != null" >
+        ord_add_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ordId != null" >
+        #{ordId,jdbcType=VARCHAR},
+      </if>
+      <if test="ordIds != null" >
+        #{ordIds,jdbcType=VARCHAR},
+      </if>
+      <if test="ordName != null" >
+        #{ordName,jdbcType=VARCHAR},
+      </if>
+      <if test="ordNum != null" >
+        #{ordNum,jdbcType=INTEGER},
+      </if>
+      <if test="ordDataStatus != null" >
+        #{ordDataStatus,jdbcType=INTEGER},
+      </if>
+      <if test="ordXinghao != null" >
+        #{ordXinghao,jdbcType=VARCHAR},
+      </if>
+      <if test="ordPrice != null" >
+        #{ordPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="ordAddDate != null" >
+        #{ordAddDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.sofun.api.pojo.JhacOrderDetail" >
+    update jhac_order_detail
+    <set >
+      <if test="ordIds != null" >
+        ord_ids = #{ordIds,jdbcType=VARCHAR},
+      </if>
+      <if test="ordName != null" >
+        ord_name = #{ordName,jdbcType=VARCHAR},
+      </if>
+      <if test="ordNum != null" >
+        ord_num = #{ordNum,jdbcType=INTEGER},
+      </if>
+      <if test="ordDataStatus != null" >
+        ord_data_status = #{ordDataStatus,jdbcType=INTEGER},
+      </if>
+      <if test="ordXinghao != null" >
+        ord_xinghao = #{ordXinghao,jdbcType=VARCHAR},
+      </if>
+      <if test="ordPrice != null" >
+        ord_price = #{ordPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="ordAddDate != null" >
+        ord_add_date = #{ordAddDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ord_id = #{ordId,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

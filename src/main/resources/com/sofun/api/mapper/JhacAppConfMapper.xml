@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.JhacAppConfMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.JhacAppConf" >
+    <id column="conf_id" property="confId" jdbcType="VARCHAR" />
+    <result column="conf_key" property="confKey" jdbcType="VARCHAR" />
+    <result column="conf_value" property="confValue" jdbcType="VARCHAR" />
+    <result column="conf_date" property="confDate" jdbcType="VARCHAR" />
+    <result column="conf_status" property="confStatus" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    conf_id, conf_key, conf_value, conf_date, conf_status
+  </sql>
+  
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhac_app_conf
+    where conf_id = #{confId,jdbcType=VARCHAR}
+    and conf_status='1'
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	select
+  	<include refid="Base_Column_List" />
+  	from jhac_app_conf
+  	where 1=1
+  	and conf_status='1'
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from jhac_app_conf
+    where conf_id = #{confId,jdbcType=VARCHAR}
+  </delete>
+
+  
+  <insert id="insert" parameterType="com.sofun.api.pojo.JhacAppConf" >
+    insert into jhac_app_conf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="confId != null" >
+        conf_id,
+      </if>
+      <if test="confKey != null" >
+        conf_key,
+      </if>
+      <if test="confValue != null" >
+        conf_value,
+      </if>
+      <if test="confDate != null" >
+        conf_date,
+      </if>
+      <if test="confStatus != null" >
+        conf_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="confId != null" >
+        #{confId,jdbcType=VARCHAR},
+      </if>
+      <if test="confKey != null" >
+        #{confKey,jdbcType=VARCHAR},
+      </if>
+      <if test="confValue != null" >
+        #{confValue,jdbcType=VARCHAR},
+      </if>
+      <if test="confDate != null" >
+        #{confDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confStatus != null" >
+        #{confStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+ 
+  <update id="update" parameterType="com.sofun.api.pojo.JhacAppConf" >
+    update jhac_app_conf
+    <set >
+      <if test="confKey != null" >
+        conf_key = #{confKey,jdbcType=VARCHAR},
+      </if>
+      <if test="confValue != null" >
+        conf_value = #{confValue,jdbcType=VARCHAR},
+      </if>
+      <if test="confDate != null" >
+        conf_date = #{confDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confStatus != null" >
+        conf_status = #{confStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where conf_id = #{confId,jdbcType=VARCHAR}
+  </update>
+ 
+</mapper>

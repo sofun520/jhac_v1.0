@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.JhacUrlMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.JhacUrl" >
+    <id column="url_id" property="urlId" jdbcType="VARCHAR" />
+    <result column="url_name" property="urlName" jdbcType="VARCHAR" />
+    <result column="url_link" property="urlLink" jdbcType="VARCHAR" />
+    <result column="url_parent" property="urlParent" jdbcType="VARCHAR" />
+    <result column="url_date" property="urlDate" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    url_id, url_name, url_link, url_parent, url_date
+  </sql>
+  
+  <sql id="baseSql">
+  	select
+  	<include refid="Base_Column_List" />
+  	from jhac_url
+  	where 1=1
+  	<if test="urlParent != null">
+  		and url_parent=#{urlParent}
+  	</if>
+  	<if test="menuName != null and menuName != ''">
+  		and url_name like '%${menuName}%' 
+  	</if>
+  </sql>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	<include refid="baseSql" />
+  	order by url_date
+  	<if test="pageSize != null">
+  		limit #{startIndex},#{pageSize}
+  	</if>
+  </select>
+  
+  
+  <select id="queryMenu" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	SELECT
+		u.*
+	FROM
+		`role_url` ru,
+		jhac_url u
+	WHERE
+		ru.ru_url_id = u.url_id
+	AND ru.ru_role_id = #{roleId}
+  	<if test="urlParent != null">
+  		and u.url_parent=#{urlParent}
+  	</if>
+  	order by u.url_date
+  </select>
+
+  
+  <select id="total" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	select
+  	count(*)
+  	from (
+  		<include refid="baseSql" />
+  	) as aa
+  </select>
+  
+  
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhac_url
+    where url_id = #{urlId,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from jhac_url
+    where url_id = #{urlId,jdbcType=VARCHAR}
+  </delete>
+ 
+  <insert id="insert" parameterType="com.sofun.api.pojo.JhacUrl" >
+    insert into jhac_url
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="urlId != null" >
+        url_id,
+      </if>
+      <if test="urlName != null" >
+        url_name,
+      </if>
+      <if test="urlLink != null" >
+        url_link,
+      </if>
+      <if test="urlParent != null" >
+        url_parent,
+      </if>
+      <if test="urlDate != null" >
+        url_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="urlId != null" >
+        #{urlId,jdbcType=VARCHAR},
+      </if>
+      <if test="urlName != null" >
+        #{urlName,jdbcType=VARCHAR},
+      </if>
+      <if test="urlLink != null" >
+        #{urlLink,jdbcType=VARCHAR},
+      </if>
+      <if test="urlParent != null" >
+        #{urlParent,jdbcType=VARCHAR},
+      </if>
+      <if test="urlDate != null" >
+        #{urlDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+ 
+  <update id="update" parameterType="com.sofun.api.pojo.JhacUrl" >
+    update jhac_url
+    <set >
+      <if test="urlName != null" >
+        url_name = #{urlName,jdbcType=VARCHAR},
+      </if>
+      <if test="urlLink != null" >
+        url_link = #{urlLink,jdbcType=VARCHAR},
+      </if>
+      <if test="urlParent != null" >
+        url_parent = #{urlParent,jdbcType=VARCHAR},
+      </if>
+      <if test="urlDate != null" >
+        url_date = #{urlDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where url_id = #{urlId,jdbcType=VARCHAR}
+  </update>
+  
+ 
+</mapper>

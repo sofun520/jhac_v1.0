@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.JhacCarMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.JhacCar" >
+    <id column="car_id" property="carId" jdbcType="VARCHAR" />
+    <result column="car_class_id" property="carClassId" jdbcType="VARCHAR" />
+    <result column="car_changpai" property="carChangpai" jdbcType="VARCHAR" />
+    <result column="car_xinghao" property="carXinghao" jdbcType="VARCHAR" />
+    <result column="car_dengjidate" property="carDengjidate" jdbcType="VARCHAR" />
+    <result column="car_licence" property="carLicence" jdbcType="VARCHAR" />
+    <result column="car_engineno" property="carEngineno" jdbcType="VARCHAR" />
+    <result column="car_color" property="carColor" jdbcType="VARCHAR" />
+    <result column="car_gear" property="carGear" jdbcType="VARCHAR" />
+    <result column="car_out_id" property="carOutId" jdbcType="VARCHAR" />
+    <result column="car_add_date" property="carAddDate" jdbcType="VARCHAR" />
+    <result column="car_data_status" property="carDataStatus" jdbcType="INTEGER" />
+  </resultMap>
+ 
+  <sql id="Base_Column_List" >
+    car_id, car_class_id, car_changpai, car_xinghao, car_dengjidate, car_licence, car_engineno, 
+    car_color, car_gear, car_out_id, car_add_date, car_data_status
+  </sql>
+  
+  
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhac_car
+    where 
+    1=1
+    and car_id = #{_parameter}
+    <!-- <if test="carId != null and carId != ''">
+	    and car_id = #{_parameter}
+    </if> -->
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	select
+  	<include refid="Base_Column_List" />
+  	from jhac_car
+  	where 1=1
+  	<if test="carOutId != null and carOutId != ''">
+    	and car_out_id = #{carOutId}
+    </if>
+  	<if test="pageSize != null">
+  		limit #{startIndex},#{pageSize}
+  	</if>
+  </select>
+  
+  <select id="total" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	select
+  	count(*)
+  	from jhac_car
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from jhac_car
+    where car_id = #{carId,jdbcType=VARCHAR}
+  </delete>
+ 
+  <insert id="insert" parameterType="com.sofun.api.pojo.JhacCar" >
+    insert into jhac_car
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="carId != null" >
+        car_id,
+      </if>
+      <if test="carClassId != null" >
+        car_class_id,
+      </if>
+      <if test="carChangpai != null" >
+        car_changpai,
+      </if>
+      <if test="carXinghao != null" >
+        car_xinghao,
+      </if>
+      <if test="carDengjidate != null" >
+        car_dengjidate,
+      </if>
+      <if test="carLicence != null" >
+        car_licence,
+      </if>
+      <if test="carEngineno != null" >
+        car_engineno,
+      </if>
+      <if test="carColor != null" >
+        car_color,
+      </if>
+      <if test="carGear != null" >
+        car_gear,
+      </if>
+      <if test="carOutId != null" >
+        car_out_id,
+      </if>
+      <if test="carAddDate != null" >
+        car_add_date,
+      </if>
+      <if test="carDataStatus != null" >
+        car_data_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="carId != null" >
+        #{carId,jdbcType=VARCHAR},
+      </if>
+      <if test="carClassId != null" >
+        #{carClassId,jdbcType=VARCHAR},
+      </if>
+      <if test="carChangpai != null" >
+        #{carChangpai,jdbcType=VARCHAR},
+      </if>
+      <if test="carXinghao != null" >
+        #{carXinghao,jdbcType=VARCHAR},
+      </if>
+      <if test="carDengjidate != null" >
+        #{carDengjidate,jdbcType=VARCHAR},
+      </if>
+      <if test="carLicence != null" >
+        #{carLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="carEngineno != null" >
+        #{carEngineno,jdbcType=VARCHAR},
+      </if>
+      <if test="carColor != null" >
+        #{carColor,jdbcType=VARCHAR},
+      </if>
+      <if test="carGear != null" >
+        #{carGear,jdbcType=VARCHAR},
+      </if>
+      <if test="carOutId != null" >
+        #{carOutId,jdbcType=VARCHAR},
+      </if>
+      <if test="carAddDate != null" >
+        #{carAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="carDataStatus != null" >
+        #{carDataStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.sofun.api.pojo.JhacCar" >
+    update jhac_car
+    <set >
+      <if test="carClassId != null" >
+        car_class_id = #{carClassId,jdbcType=VARCHAR},
+      </if>
+      <if test="carChangpai != null" >
+        car_changpai = #{carChangpai,jdbcType=VARCHAR},
+      </if>
+      <if test="carXinghao != null" >
+        car_xinghao = #{carXinghao,jdbcType=VARCHAR},
+      </if>
+      <if test="carDengjidate != null" >
+        car_dengjidate = #{carDengjidate,jdbcType=VARCHAR},
+      </if>
+      <if test="carLicence != null" >
+        car_licence = #{carLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="carEngineno != null" >
+        car_engineno = #{carEngineno,jdbcType=VARCHAR},
+      </if>
+      <if test="carColor != null" >
+        car_color = #{carColor,jdbcType=VARCHAR},
+      </if>
+      <if test="carGear != null" >
+        car_gear = #{carGear,jdbcType=VARCHAR},
+      </if>
+      <if test="carOutId != null" >
+        car_out_id = #{carOutId,jdbcType=VARCHAR},
+      </if>
+      <if test="carAddDate != null" >
+        car_add_date = #{carAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="carDataStatus != null" >
+        car_data_status = #{carDataStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where car_id = #{carId,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

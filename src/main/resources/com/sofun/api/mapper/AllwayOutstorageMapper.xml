@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.AllwayOutMapper">
+	<resultMap id="BaseResultMap" type="com.sofun.api.pojo.AllwayOutstorage">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="serialno" property="serialno" jdbcType="VARCHAR" />
+		<result column="option" property="option" jdbcType="VARCHAR" />
+		<result column="frameno" property="frameno" jdbcType="VARCHAR" />
+		<result column="outbeizhu" property="outbeizhu" jdbcType="VARCHAR" />
+		<result column="outdate" property="outdate" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="outbrand" property="outbrand" jdbcType="VARCHAR" />
+		<result column="person" property="person" jdbcType="VARCHAR" />
+		<result column="location" property="location" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, serialno, `option`, frameno, outbeizhu, outdate, address,
+		outbrand,
+		person, location
+	</sql>
+
+	<select id="find" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from allway_outstorage
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from allway_outstorage
+		<if test="pageSize != null">
+			limit #{startIndex},#{pageSize}
+		</if>
+	</select>
+
+	<select id="total" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select
+		count(*)
+		from allway_outstorage
+	</select>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from allway_outstorage
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="com.sofun.api.pojo.AllwayOutstorage">
+		insert into allway_outstorage
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != ''">
+				id,
+			</if>
+			<if test="serialno != null and serialno !=''">
+				serialno,
+			</if>
+			<if test="frameno != null and frameno !=''">
+				frameno,
+			</if>
+			<if test="outbeizhu != null and outbeizhu !=''">
+				outbeizhu,
+			</if>
+			<if test="outdate != null and outdate !=''">
+				outdate,
+			</if>
+			<if test="address != null and address !=''">
+				address,
+			</if>
+			<if test="outbrand != null and outbrand !=''">
+				outbrand,
+			</if>
+			<if test="person != null and person !=''">
+				person,
+			</if>
+			<if test="location != null and location !=''">
+				location,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null and id !=''">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="serialno != null and serialno !=''">
+				#{serialno,jdbcType=VARCHAR},
+			</if>
+			<if test="frameno != null and frameno !=''">
+				#{frameno,jdbcType=VARCHAR},
+			</if>
+			<if test="outbeizhu != null and outbeizhu !=''">
+				#{outbeizhu,jdbcType=VARCHAR},
+			</if>
+			<if test="outdate != null and outdate !=''">
+				#{outdate,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null and address !=''">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="outbrand != null and outbrand !=''">
+				#{outbrand,jdbcType=VARCHAR},
+			</if>
+			<if test="person != null and person !=''">
+				#{person,jdbcType=VARCHAR},
+			</if>
+			<if test="location != null and location !=''">
+				#{location,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="com.sofun.api.pojo.AllwayOutstorage">
+		update allway_outstorage
+		<set>
+			<if test="serialno != null">
+				serialno = #{serialno,jdbcType=VARCHAR},
+			</if>
+			<if test="option != null">
+				option = #{option,jdbcType=VARCHAR},
+			</if>
+			<if test="frameno != null">
+				frameno = #{frameno,jdbcType=VARCHAR},
+			</if>
+			<if test="outbeizhu != null">
+				outbeizhu = #{outbeizhu,jdbcType=VARCHAR},
+			</if>
+			<if test="outdate != null">
+				outdate = #{outdate,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="outbrand != null">
+				outbrand = #{outbrand,jdbcType=VARCHAR},
+			</if>
+			<if test="person != null">
+				person = #{person,jdbcType=VARCHAR},
+			</if>
+			<if test="location != null">
+				location = #{location,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>

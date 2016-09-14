@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sofun.api.mapper.JhacProductClassMapper" >
+  <resultMap id="BaseResultMap" type="com.sofun.api.pojo.JhacProductClass" >
+    <id column="pc_id" property="pcId" jdbcType="VARCHAR" />
+    <result column="pc_name" property="pcName" jdbcType="VARCHAR" />
+    <result column="pc_xinghao" property="pcXinghao" jdbcType="VARCHAR" />
+    <result column="pc_data_status" property="pcDataStatus" jdbcType="INTEGER" />
+    <result column="pc_add_date" property="pcAddDate" jdbcType="VARCHAR" />
+    <result column="pc_price" property="pcPrice" jdbcType="DOUBLE" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    pc_id, pc_name, pc_xinghao, pc_data_status, pc_add_date, pc_price
+  </sql>
+  
+  
+  <select id="find" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhac_product_class
+    where pc_id = #{pcId,jdbcType=VARCHAR}
+  </select>
+  
+  <sql id="baseQuery">
+  	select
+  	<include refid="Base_Column_List" />
+  	from jhac_product_class
+  	where 1=1
+  	<if test="pcType != null and pcType != ''">
+  		and pc_type=#{pcType}
+  	</if>
+  </sql>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	<include refid="baseQuery" />
+  	order by pc_add_date
+  	<if test="pageSize != null">
+  		limit #{startIndex},#{pageSize}
+  	</if>
+  </select>
+  
+  <select id="total" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	select
+  	count(*)
+  	from
+  	(
+  		<include refid="baseQuery" />
+  	) aa
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from jhac_product_class
+    where pc_id = #{pcId,jdbcType=VARCHAR}
+  </delete>
+  
+  
+  <insert id="insert" parameterType="com.sofun.api.pojo.JhacProductClass" >
+    insert into jhac_product_class
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pcId != null" >
+        pc_id,
+      </if>
+      <if test="pcName != null" >
+        pc_name,
+      </if>
+      <if test="pcXinghao != null" >
+        pc_xinghao,
+      </if>
+      <if test="pcDataStatus != null" >
+        pc_data_status,
+      </if>
+      <if test="pcAddDate != null" >
+        pc_add_date,
+      </if>
+      <if test="pcPrice != null" >
+        pc_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pcId != null" >
+        #{pcId,jdbcType=VARCHAR},
+      </if>
+      <if test="pcName != null" >
+        #{pcName,jdbcType=VARCHAR},
+      </if>
+      <if test="pcXinghao != null" >
+        #{pcXinghao,jdbcType=VARCHAR},
+      </if>
+      <if test="pcDataStatus != null" >
+        #{pcDataStatus,jdbcType=INTEGER},
+      </if>
+      <if test="pcAddDate != null" >
+        #{pcAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcPrice != null" >
+        #{pcPrice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.sofun.api.pojo.JhacProductClass" >
+    update jhac_product_class
+    <set >
+      <if test="pcName != null" >
+        pc_name = #{pcName,jdbcType=VARCHAR},
+      </if>
+      <if test="pcXinghao != null" >
+        pc_xinghao = #{pcXinghao,jdbcType=VARCHAR},
+      </if>
+      <if test="pcDataStatus != null" >
+        pc_data_status = #{pcDataStatus,jdbcType=INTEGER},
+      </if>
+      <if test="pcAddDate != null" >
+        pc_add_date = #{pcAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcPrice != null" >
+        pc_price = #{pcPrice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where pc_id = #{pcId,jdbcType=VARCHAR}
+  </update>
+ 
+</mapper>
